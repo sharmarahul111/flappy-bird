@@ -4,8 +4,9 @@ const c = canvas.getContext('2d')
 canvas.width = innerWidth
 canvas.height = innerHeight
 let aspectRatio = canvas.height / canvas.width
-const PILLARGAP = 120
+const PILLARGAP = 220
 const GAMESPEED = 1
+const FLAPSPEED = 25
 let highScore = localStorage.getItem("flappyBirdHighScore") || 0
 let score = 0
 let backgroundPos = { x1: 0, x2: aspectRatio * 800 }
@@ -42,8 +43,9 @@ function updateScore() {
   scoreBoard.innerHTML = `HI ${highScore} ${score}`
 }
 function generatePillars() {
-  if ((frame - 50) % (60) == 0) {
+  if (frame % 70 == 0) {
     pillars.push(new Pillar)
+    frame = 0
   }
 }
 function handleStars() {
@@ -65,18 +67,10 @@ function gameOver() {
   score = 0
   frame = 0
 }
-addEventListener('touchstart', e => {
-  bird.flapping = true
-})
-addEventListener('touchend', e => {
-  bird.flapping = false
-})
-addEventListener('mousedown', e => {
-  bird.flapping = true
-})
-addEventListener('mouseup', e => {
-  bird.flapping = false
-})
+
+let flapEvents = ['touchstart', 'mousedown', 'keydown']
+flapEvents.forEach(event => addEventListener(event, () => bird.flap()))
+
 
 addEventListener('load', loadCanvas)
 function loadCanvas() {
@@ -89,6 +83,9 @@ function start() {
   document.querySelector('.menu').style.display = 'none'
   bird = new Player()
   animate()
+}
+function randomInt(a, b) {
+  return a + Math.floor((b - a) * Math.random())
 }
 
 const rotateBtn = document.querySelector('.orientation')
