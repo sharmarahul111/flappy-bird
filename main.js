@@ -68,7 +68,7 @@ function gameOver() {
   frame = 0
 }
 
-let flapEvents = ['touchstart', 'mousedown', 'keydown']
+let flapEvents = ['pointerdown', 'keydown']
 flapEvents.forEach(event => addEventListener(event, () => bird.flap()))
 
 
