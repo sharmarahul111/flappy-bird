@@ -45,7 +45,7 @@ class Pillar {
 }
 class Player {
   constructor() {
-    this.x = 5
+    this.x = 50
     this.y = canvas.height / 2
     this.vy = 0
     this.acceleration = 0.8
